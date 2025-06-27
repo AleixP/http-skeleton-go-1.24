@@ -1,0 +1,24 @@
+services:
+  mysql:
+    build:
+        context: ./docker/database
+    container_name: http-skeleton-database
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports: ["3306:3306"]
+    tty: true
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: http-skeleton-go
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - "${PWD}/:/var/www/html"
+    depends_on:
+      - mysql
