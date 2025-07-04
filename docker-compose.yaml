@@ -14,11 +14,15 @@ services:
       context: .
       dockerfile: docker/backend/Dockerfile
     container_name: http-skeleton-go
+    restart: unless-stopped
+    environment:
+      - DB_HOST=host.docker.internal
     env_file:
       - .env
     ports:
       - "8080:8080"
     volumes:
       - "${PWD}/:/var/www/html"
+      - ./database:/app/database
     depends_on:
       - mysql

@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"os"
 )
 
@@ -13,14 +14,19 @@ type Config struct {
 	DBName     string
 }
 
-func Load() *Config {
+func Load() (*Config, error) {
+	err := godotenv.Load()
+	if err != nil {
+		return nil, err
+	}
+
 	return &Config{
 		DBUser:     os.Getenv("DB_USER"),
 		DBPassword: os.Getenv("DB_PASSWORD"),
 		DBHost:     os.Getenv("DB_HOST"),
 		DBPort:     os.Getenv("DB_PORT"),
 		DBName:     os.Getenv("DB_NAME"),
-	}
+	}, nil
 }
 
 func (c *Config) DSN() string {
