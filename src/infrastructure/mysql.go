@@ -3,7 +3,7 @@ package infrastructure
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"http-skeleton-go-1.24/src/config"
+	"http-skeleton-go-1.24/src/user-interface/config"
 )
 
 func StartMySQL(cfg *config.Config) (*sql.DB, error) {
