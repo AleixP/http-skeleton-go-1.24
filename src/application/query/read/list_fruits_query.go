@@ -3,16 +3,16 @@ package read
 import (
 	"encoding/json"
 	"http-skeleton-go-1.24/src/application/transformers"
-	"http-skeleton-go-1.24/src/domain/services"
+	"http-skeleton-go-1.24/src/domain/service"
 	"http-skeleton-go-1.24/src/user-interface/dto"
 	"net/http"
 )
 
 type ListFruitsQuery struct {
-	FruitService *services.FruitService
+	FruitService *service.FruitService
 }
 
-func NewListFruitsQuery(fruitService *services.FruitService) *ListFruitsQuery {
+func NewListFruitsQuery(fruitService *service.FruitService) *ListFruitsQuery {
 	return &ListFruitsQuery{FruitService: fruitService}
 }
 

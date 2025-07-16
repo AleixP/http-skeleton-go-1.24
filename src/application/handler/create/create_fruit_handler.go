@@ -4,16 +4,16 @@ import (
 	"encoding/json"
 	"http-skeleton-go-1.24/src/application/transformers"
 	fruitEntity "http-skeleton-go-1.24/src/domain/model/fruit"
-	"http-skeleton-go-1.24/src/domain/services"
+	"http-skeleton-go-1.24/src/domain/service"
 	"http-skeleton-go-1.24/src/infrastructure/dto"
 	"net/http"
 )
 
 type CreateFruitHandler struct {
-	FruitService *services.FruitService
+	FruitService *service.FruitService
 }
 
-func NewCreateFruitHandler(fruitService *services.FruitService) *CreateFruitHandler {
+func NewCreateFruitHandler(fruitService *service.FruitService) *CreateFruitHandler {
 	return &CreateFruitHandler{FruitService: fruitService}
 }
 

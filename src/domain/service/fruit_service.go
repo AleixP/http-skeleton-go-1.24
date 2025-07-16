@@ -1,4 +1,4 @@
-package services
+package service
 
 import "http-skeleton-go-1.24/src/domain/model/fruit"
 

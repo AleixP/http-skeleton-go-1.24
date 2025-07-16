@@ -3,19 +3,19 @@ package config
 import (
 	"http-skeleton-go-1.24/src/application/handler/create"
 	"http-skeleton-go-1.24/src/application/query/read"
-	"http-skeleton-go-1.24/src/domain/services"
+	"http-skeleton-go-1.24/src/domain/service"
 	"net/http"
 	"strings"
 )
 
-func NewRouter(fruitService *services.FruitService) http.Handler {
+func NewRouter(fruitService *service.FruitService) http.Handler {
 	mux := http.NewServeMux()
 
 	registerFruitRoutes(fruitService, mux)
 	return mux
 }
 
-func registerFruitRoutes(fruitService *services.FruitService, mux *http.ServeMux) {
+func registerFruitRoutes(fruitService *service.FruitService, mux *http.ServeMux) {
 	mux.HandleFunc("/fruits", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodPost:

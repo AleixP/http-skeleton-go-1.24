@@ -3,9 +3,9 @@ package main
 import (
 	"database/sql"
 	"github.com/joho/godotenv"
-	"http-skeleton-go-1.24/src/domain/services"
+	"http-skeleton-go-1.24/src/domain/service"
 	"http-skeleton-go-1.24/src/infrastructure"
-	"http-skeleton-go-1.24/src/infrastructure/repositories"
+	"http-skeleton-go-1.24/src/infrastructure/repository"
 	"http-skeleton-go-1.24/src/user-interface/config"
 	"log"
 	"net/http"
@@ -22,9 +22,9 @@ func main() {
 
 }
 
-func initServices(db *sql.DB) *services.FruitService {
-	fruitRepository := repositories.NewMysqlFruitRepository(db)
-	fruitService := services.NewFruitService(fruitRepository)
+func initServices(db *sql.DB) *service.FruitService {
+	fruitRepository := repository.NewMysqlFruitRepository(db)
+	fruitService := service.NewFruitService(fruitRepository)
 	return fruitService
 }
 

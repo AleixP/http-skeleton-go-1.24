@@ -3,16 +3,16 @@ package read
 import (
 	"encoding/json"
 	"http-skeleton-go-1.24/src/application/transformers"
-	"http-skeleton-go-1.24/src/domain/services"
+	"http-skeleton-go-1.24/src/domain/service"
 	"net/http"
 	"strconv"
 )
 
 type FindFruitQuery struct {
-	FruitService *services.FruitService
+	FruitService *service.FruitService
 }
 
-func NewFindFruitQuery(fruitService *services.FruitService) *FindFruitQuery {
+func NewFindFruitQuery(fruitService *service.FruitService) *FindFruitQuery {
 	return &FindFruitQuery{FruitService: fruitService}
 }
 func (findFruitQuery *FindFruitQuery) FindById(w http.ResponseWriter, r *http.Request, id string) {
