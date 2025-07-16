@@ -2,10 +2,10 @@ package create
 
 import (
 	"encoding/json"
+	"http-skeleton-go-1.24/src/application/transformers"
 	fruitEntity "http-skeleton-go-1.24/src/domain/model/fruit"
 	"http-skeleton-go-1.24/src/domain/services"
 	"http-skeleton-go-1.24/src/infrastructure/dto"
-	//	"http-skeleton-go-1.24/src/application/transformers"
 	"net/http"
 )
 
@@ -25,11 +25,9 @@ func (handler *CreateFruitHandler) Create(responseWriter http.ResponseWriter, re
 		http.Error(responseWriter, "Error saving fruit: ", http.StatusInternalServerError)
 		return
 	}
-	/*
 
-		response := (fruit, int(id))
-		w.WriteHeader(http.StatusCreated)
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(response)
-	*/
+	response := transformers.TransformFruit(fruit, int(id))
+	responseWriter.WriteHeader(http.StatusCreated)
+	responseWriter.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(responseWriter).Encode(response)
 }
