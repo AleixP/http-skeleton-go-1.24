@@ -4,14 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/suite"
 	"net/http"
-	"testing"
 )
-
-func TestApiSuite(t *testing.T) {
-	suite.Run(t, new(APISuite))
-}
 
 func (suite *APISuite) TestCreateFruitWithCorrectParameters() {
 	url := suite.baseUrl + "/fruits"
