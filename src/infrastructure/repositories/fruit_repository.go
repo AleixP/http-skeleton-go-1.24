@@ -14,8 +14,8 @@ func NewMysqlFruitRepository(db *sql.DB) *MysqlFruitRepository {
 }
 
 func (r *MysqlFruitRepository) Create(fruit *fruit.Fruit) (int64, error) {
-	query := `INSERT INTO fruits (name) VALUES (?)`
-	result, err := r.DB.Exec(query, fruit.Name)
+	query := `INSERT INTO fruits (name, color) VALUES (?, ?)`
+	result, err := r.DB.Exec(query, fruit.Name, fruit.Color)
 	if err != nil {
 		return 0, err
 	}

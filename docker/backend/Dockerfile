@@ -10,6 +10,6 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o main ./src/cmd
+RUN go build -o main ./src/user-interface/cmd
 
 CMD ["./main"]

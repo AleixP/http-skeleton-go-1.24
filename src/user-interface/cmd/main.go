@@ -16,9 +16,9 @@ func main() {
 	db := initDb()
 	fruitService := initServices(db)
 	router := config.NewRouter(fruitService)
-	
-	log.Println("Server running at http://localhost:8081")
-	log.Fatal(http.ListenAndServe(":8081", router))
+
+	log.Println("Server running at http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", router))
 
 }
 
