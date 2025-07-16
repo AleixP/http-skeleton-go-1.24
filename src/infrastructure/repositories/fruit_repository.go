@@ -9,6 +9,10 @@ type MysqlFruitRepository struct {
 	DB *sql.DB
 }
 
+func NewMysqlFruitRepository(db *sql.DB) *MysqlFruitRepository {
+	return &MysqlFruitRepository{DB: db}
+}
+
 func (r *MysqlFruitRepository) Create(fruit *fruit.Fruit) (int64, error) {
 	query := `INSERT INTO fruits (name) VALUES (?)`
 	result, err := r.DB.Exec(query, fruit.Name)

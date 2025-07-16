@@ -10,7 +10,11 @@ import (
 )
 
 type CreateFruitHandler struct {
-	FruitService services.FruitService
+	FruitService *services.FruitService
+}
+
+func NewCreateFruitHandler(fruitService *services.FruitService) *CreateFruitHandler {
+	return &CreateFruitHandler{FruitService: fruitService}
 }
 
 func (handler *CreateFruitHandler) Create(responseWriter http.ResponseWriter, request *http.Request) {

@@ -9,11 +9,14 @@ import (
 )
 
 type FindFruitQuery struct {
-	FruitRepository services.FruitRepository
+	FruitService *services.FruitService
 }
 
+func NewFindFruitQuery(fruitService *services.FruitService) *FindFruitQuery {
+	return &FindFruitQuery{FruitService: fruitService}
+}
 func (findFruitQuery *FindFruitQuery) FindById(w http.ResponseWriter, r *http.Request, id string) {
-	fruit, err := findFruitQuery.FruitRepository.FindById(id)
+	fruit, err := findFruitQuery.FruitService.FindById(id)
 	if err != nil {
 		http.Error(w, "Fruit not found", http.StatusNotFound)
 		return

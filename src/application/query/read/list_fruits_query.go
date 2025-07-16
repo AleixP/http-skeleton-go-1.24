@@ -2,19 +2,31 @@ package read
 
 import (
 	"encoding/json"
+	"http-skeleton-go-1.24/src/application/transformers"
 	"http-skeleton-go-1.24/src/domain/services"
+	"http-skeleton-go-1.24/src/user-interface/dto"
 	"net/http"
 )
 
 type ListFruitsQuery struct {
-	FruitRepository services.FruitRepository
+	FruitService *services.FruitService
+}
+
+func NewListFruitsQuery(fruitService *services.FruitService) *ListFruitsQuery {
+	return &ListFruitsQuery{FruitService: fruitService}
 }
 
 func (listFruitsQuery *ListFruitsQuery) ListFruits(w http.ResponseWriter, r *http.Request) {
-	items, err := listFruitsQuery.FruitRepository.List()
+	items, err := listFruitsQuery.FruitService.List()
 	if err != nil {
 		http.Error(w, "Error listing records", http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(items)
+
+	var transformedFruits []dto.FruitResponse
+	for _, fruit := range items {
+		transformedFruits = append(transformedFruits, transformers.TransformFruit(fruit, *fruit.ID))
+	}
+
+	json.NewEncoder(w).Encode(transformedFruits)
 }
