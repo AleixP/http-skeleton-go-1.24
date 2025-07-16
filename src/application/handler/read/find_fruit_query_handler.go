@@ -8,15 +8,15 @@ import (
 	"strconv"
 )
 
-type FindFruitQuery struct {
+type FindFruitQueryHandler struct {
 	FruitService *service.FruitService
 }
 
-func NewFindFruitQuery(fruitService *service.FruitService) *FindFruitQuery {
-	return &FindFruitQuery{FruitService: fruitService}
+func NewFindFruitQueryHandler(fruitService *service.FruitService) *FindFruitQueryHandler {
+	return &FindFruitQueryHandler{FruitService: fruitService}
 }
-func (findFruitQuery *FindFruitQuery) FindById(w http.ResponseWriter, r *http.Request, id string) {
-	fruit, err := findFruitQuery.FruitService.FindById(id)
+func (findFruitQueryHandler *FindFruitQueryHandler) FindById(w http.ResponseWriter, r *http.Request, id string) {
+	fruit, err := findFruitQueryHandler.FruitService.FindById(id)
 	if err != nil {
 		http.Error(w, "Fruit not found", http.StatusNotFound)
 		return

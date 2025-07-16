@@ -2,6 +2,7 @@ package create
 
 import (
 	"encoding/json"
+	"github.com/go-playground/validator/v10"
 	"http-skeleton-go-1.24/src/application/transformers"
 	fruitEntity "http-skeleton-go-1.24/src/domain/model/fruit"
 	"http-skeleton-go-1.24/src/domain/service"
@@ -19,10 +20,18 @@ func NewCreateFruitHandler(fruitService *service.FruitService) *CreateFruitHandl
 
 func (handler *CreateFruitHandler) Create(responseWriter http.ResponseWriter, request *http.Request) {
 	var fruitDto dto.CrateFruitDtoRequest
+	
 	if err := json.NewDecoder(request.Body).Decode(&fruitDto); err != nil {
 		http.Error(responseWriter, "Invalid request", http.StatusBadRequest)
 		return
 	}
+
+	validate := validator.New()
+	if err := validate.Struct(fruitDto); err != nil {
+		http.Error(responseWriter, "Missing required fields", http.StatusBadRequest)
+		return
+	}
+
 	fruit := fruitEntity.CreateFromPrimitive(fruitDto.Name, fruitDto.Color)
 	id, err := handler.FruitService.Create(fruit)
 	if err != nil {

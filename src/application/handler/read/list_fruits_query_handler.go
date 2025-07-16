@@ -8,16 +8,16 @@ import (
 	"net/http"
 )
 
-type ListFruitsQuery struct {
+type ListFruitsQueryHandler struct {
 	FruitService *service.FruitService
 }
 
-func NewListFruitsQuery(fruitService *service.FruitService) *ListFruitsQuery {
-	return &ListFruitsQuery{FruitService: fruitService}
+func NewListFruitsQueryHandler(fruitService *service.FruitService) *ListFruitsQueryHandler {
+	return &ListFruitsQueryHandler{FruitService: fruitService}
 }
 
-func (listFruitsQuery *ListFruitsQuery) ListFruits(w http.ResponseWriter, r *http.Request) {
-	items, err := listFruitsQuery.FruitService.List()
+func (listFruitsQueryHandler *ListFruitsQueryHandler) ListFruits(w http.ResponseWriter, r *http.Request) {
+	items, err := listFruitsQueryHandler.FruitService.List()
 	if err != nil {
 		http.Error(w, "Error listing records", http.StatusInternalServerError)
 		return

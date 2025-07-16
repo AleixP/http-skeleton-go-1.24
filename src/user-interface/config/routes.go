@@ -2,8 +2,9 @@ package config
 
 import (
 	"http-skeleton-go-1.24/src/application/handler/create"
-	"http-skeleton-go-1.24/src/application/query/read"
+	"http-skeleton-go-1.24/src/application/handler/read"
 	"http-skeleton-go-1.24/src/domain/service"
+	"http-skeleton-go-1.24/src/infrastructure/middleware"
 	"net/http"
 	"strings"
 )
@@ -22,19 +23,22 @@ func registerFruitRoutes(fruitService *service.FruitService, mux *http.ServeMux)
 			handler := create.NewCreateFruitHandler(fruitService)
 			handler.Create(w, r)
 		case http.MethodGet:
-			handler := read.NewListFruitsQuery(fruitService)
+			handler := read.NewListFruitsQueryHandler(fruitService)
 			handler.ListFruits(w, r)
 		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
 	})
-	mux.HandleFunc("/fruits/{id}", func(w http.ResponseWriter, r *http.Request) {
+	mux.Handle("/fruits/", middleware.MiddlewareUp(findFruitByIdQueryHandler(fruitService)))
+}
+
+func findFruitByIdQueryHandler(fruitService *service.FruitService) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		id := strings.TrimPrefix(r.URL.Path, "/fruits/")
-		switch r.Method {
-		case http.MethodGet:
-			handler := read.NewFindFruitQuery(fruitService)
+		if r.Method == http.MethodGet {
+			handler := read.NewFindFruitQueryHandler(fruitService)
 			handler.FindById(w, r, id)
-		default:
+		} else {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
 	})
