@@ -27,6 +27,5 @@ func (listFruitsQueryHandler *ListFruitsQueryHandler) ListFruits(w http.Response
 	for _, fruit := range items {
 		transformedFruits = append(transformedFruits, transformers.TransformFruit(fruit, *fruit.ID))
 	}
-
 	json.NewEncoder(w).Encode(transformedFruits)
 }

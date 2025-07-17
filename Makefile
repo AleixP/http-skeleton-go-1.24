@@ -7,10 +7,10 @@ install: ##Wakes up all the needed docker containers
 	docker-compose up --build
 
 run: ##Executes the app locally
-	go run ./src/cmd/main.go
+	go run ./src/user-interface/cmd/main.go
 
 build: ##Compiles the app locally
-	go build ./src/cmd/main.go
+	go build ./src/user-interface/cmd/main.go
 
 tests: ##Execute all the tests
 	go test ./tests/...
