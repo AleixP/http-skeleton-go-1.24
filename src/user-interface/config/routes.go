@@ -17,6 +17,10 @@ func NewRouter(fruitService *service.FruitService) http.Handler {
 }
 
 func registerFruitRoutes(fruitService *service.FruitService, mux *http.ServeMux) {
+	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		return
+	})
 	mux.HandleFunc("/fruits", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
@@ -25,9 +29,11 @@ func registerFruitRoutes(fruitService *service.FruitService, mux *http.ServeMux)
 				handler := read.NewListFruitsQueryHandler(fruitService)
 				handler.ListFruits(w, r)
 			})).ServeHTTP(w, r)
+			return
 		case http.MethodPost:
 			handler := create.NewCreateFruitHandler(fruitService)
 			handler.Create(w, r)
+			return
 		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}

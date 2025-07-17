@@ -1,0 +1,51 @@
+name: http-skeleton-go
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build custom MySQL image for tests
+        run: docker build -t my-mysql-test:latest ./docker/database/test
+
+      - name: Run custom MySQL container
+        run: |
+          docker run -d --name test-mysql \
+          -e MYSQL_ROOT_PASSWORD=root \
+          -e MYSQL_DATABASE=svc_fruits_db \
+          -p 3306:3306 \
+          my-mysql-test:latest
+
+      - name: Build app
+        run: make install
+
+      - name: Wait for server
+        run:        |
+          cp .env.example .env
+          go mod tidy
+          sleep 10
+          for i in {1..10}; do
+          if curl -s http://localhost:8080/healthz; then
+            echo "App is up!"
+            break
+          fi
+          echo "Waiting for app..."
+          sleep 2
+          done
+
+      - name: Run acceptance tests
+        run:  |
+                  go run ./src/user-interface/cmd/main.go &
+                  APP_PID=$!
+                  sleep 2
+                  go test -v ./tests/acceptance/...
+                  kill $APP_PID

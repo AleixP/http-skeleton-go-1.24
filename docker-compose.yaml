@@ -1,7 +1,7 @@
 services:
   mysql:
     build:
-        context: ./docker/database
+        context: ./docker/database/mysql
     container_name: http-skeleton-database
     restart: unless-stopped
     env_file:

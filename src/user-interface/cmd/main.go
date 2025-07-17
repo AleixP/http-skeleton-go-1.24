@@ -9,6 +9,7 @@ import (
 	"http-skeleton-go-1.24/src/user-interface/config"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -17,8 +18,8 @@ func main() {
 	fruitService := initServices(db)
 	router := config.NewRouter(fruitService)
 
-	log.Println("Server running at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Println("Server running at " + os.Getenv("API_BASE_URL"))
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("APP_PORT"), router))
 
 }
 
