@@ -16,12 +16,12 @@ jobs:
 
       - name: Build app
         run: |
+          cp .env.example .env
           make install
           bash scripts/seed_db.sh
 
       - name: Wait for server
         run:        |
-          cp .env.example .env
           go mod tidy
           sleep 10
           for i in {1..10}; do
