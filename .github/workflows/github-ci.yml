@@ -34,9 +34,4 @@ jobs:
           done
 
       - name: Run acceptance tests
-        run:  |
-                  go run ./src/user-interface/cmd/main.go &
-                  APP_PID=$!
-                  sleep 2
-                  go test -v ./tests/acceptance/...
-                  kill $APP_PID
+        run:  go test -v ./tests/acceptance/*

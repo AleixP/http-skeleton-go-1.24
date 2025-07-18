@@ -2,4 +2,4 @@
 
 echo start executing seeds
 
-echo "INSERT INTO fruits VALUES ('apple', 'red');" | mysql --username=root root
+docker exec -i http-skeleton-database mysql -uapp -pth3p4ssw0rd svc_fruits_db < database/seeds/fruits.sql

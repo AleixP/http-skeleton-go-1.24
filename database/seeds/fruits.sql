@@ -1,0 +1,1 @@
+INSERT INTO fruits (`name`, `color`) VALUES ('apple', 'red');
