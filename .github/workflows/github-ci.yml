@@ -11,22 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build custom MySQL image for tests
-        run: docker build -t my-mysql-test:latest ./docker/database/test
-
-      - name: Run custom MySQL container
-        run: |
-          docker run -d --name test-mysql \
-          -e MYSQL_ROOT_PASSWORD=root \
-          -e MYSQL_DATABASE=svc_fruits_db \
-          -p 3306:3306 \
-          my-mysql-test:latest
+      - name: Install docker-compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
 
       - name: Build app
-        run: make install
+        run: |
+          make install
+          bash scripts/seed_db.sh
 
       - name: Wait for server
         run:        |

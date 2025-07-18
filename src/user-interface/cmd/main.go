@@ -19,7 +19,7 @@ func main() {
 	router := config.NewRouter(fruitService)
 
 	log.Println("Server running at " + os.Getenv("API_BASE_URL"))
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("APP_PORT"), router))
+	log.Fatal(http.ListenAndServe(":8080", router))
 
 }
 
